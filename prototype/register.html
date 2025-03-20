@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usability Body of Knowledge - Password Reset</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6f0fa;
+            color: #333;
+        }
+        header {
+            background: #003366;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+        .volunteer {
+            background: green;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 50px;
+        }
+        .password-reset-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form label {
+            margin-top: 10px;
+        }
+        form input {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #0073e6;
+            color: white;
+        }
+        .reset-btn:hover {
+            background: #005bb5;
+        }
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        footer {
+            background: #003366;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Usability Body of Knowledge</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">What is Usability?</a></li>
+                <li><a href="#">Topics</a></li>
+                <li><a href="#">About the Usability BoK</a></li>
+                <li><a href="#">Glossary</a></li>
+                <li class="right-nav"><a href="#">Contact</a> | <a href="#">Login</a> <button class="volunteer">Volunteer</button></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="password-reset-container">
+            <h2>Password Reset</h2>
+            <form id="reset-form">
+                <label for="email">Username or E-mail Address: *</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit" class="reset-btn">Request New Password</button>
+            </form>
+            <div class="message success" id="success-message">Password has been sent to your email.</div>
+            <div class="message error" id="error-message">Invalid email address.</div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Usability Body of Knowledge | User Experience Professionals' Association</p>
+        <p><a href="#">Creative Commons Attribution-Share Alike 3.0 Unported License</a></p>
+    </footer>
+    
+    <script>
+        document.getElementById('reset-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            const emailInput = document.getElementById('email').value;
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            if (emailInput.includes('@') && emailInput.includes('.')) {
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+            } else {
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usability Methods Course</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+        }
+        header {
+            background: #222;
+            color: white;
+            padding: 15px 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 1.5em;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            height: 100vh;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar h2 {
+            font-size: 1.2em;
+        }
+        .course-list {
+            list-style: none;
+            padding: 0;
+        }
+        .course-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .course-list li:hover {
+            background: #f0f0f0;
+        }
+        .main-content {
+            margin-left: 270px;
+            padding: 80px 40px;
+            width: calc(100% - 270px);
+        }
+        .module-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .module-header h3 {
+            margin: 0;
+        }
+        .module-header span {
+            color: green;
+            font-weight: bold;
+        }
+        .video-section {
+            margin-top: 10px;
+        }
+        .resume-button {
+            background: #0073e6;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .resume-button:hover {
+            background: #005bb5;
+        }
+        video {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Usability Learning Academy</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="courses.html">Courses</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="community.html">Community</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <aside class="sidebar">
+        <h2>Course Material</h2>
+        <ul class="course-list">
+            <li>Module 1 - Introduction</li>
+            <li>Module 2 - Usability Testing</li>
+            <li>Module 3 - Heuristic Evaluation</li>
+            <li>Module 4 - User Research</li>
+            <li>Module 5 - Advanced Techniques</li>
+        </ul>
+    </aside>
+    
+    <main class="main-content">
+        <div class="module-section">
+            <div class="module-header">
+                <h3>Week 1: Welcome!</h3>
+                <span>✔ Complete</span>
+            </div>
+            <p>Welcome to class! This course will focus on usability testing, heuristic evaluations, and user-centered design.</p>
+        </div>
+        <div class="module-section">
+            <div class="module-header">
+                <h3>Week 1 (Chapter 1, Part 1/2)</h3>
+            </div>
+            <div class="video-section">
+                <p>Where in the Genome Does DNA Replication Begin? (Part 1) (11:37)</p>
+                <video controls>
+                    <source src="lesson1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="resume-button">Resume</button>
+        </div>
+        <div class="module-section">
+            <div class="module-header">
+                <h3>Week 1 (Chapter 1, Part 2/2)</h3>
+            </div>
+            <div class="video-section">
+                <p>Where in the Genome Does DNA Replication Begin? (Part 2) (6:24)</p>
+                <video controls>
+                    <source src="lesson2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <button class="resume-button">Resume</button>
+        </div>
+    </main>
+</body>
+</html>

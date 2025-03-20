@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemical Properties App - History</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav>
+    <div class="logo">ChemApp</div>
+    <ul class="nav-links">
+      <li><a href="compound.html">Input Compound</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="#" id="logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="container history-container">
+    <h2>Your Compound History</h2>
+    <ul id="history-list">
+      <!-- History items will be populated here -->
+    </ul>
+    <button id="clear-history">Clear History</button>
+  </div>
+
+  <script>
+    // Redirect to login if not logged in
+    if (!localStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
+    }
+
+    // Logout functionality
+    document.getElementById('logout').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('loggedIn');
+      window.location.href = 'login.html';
+    });
+
+    // Load compound history from localStorage, with hard-coded examples if none exist
+    function loadHistory() {
+      let history = JSON.parse(localStorage.getItem('compoundHistory'));
+      // If there is no history, use hard-coded examples
+      if (!history || history.length === 0) {
+        history = ["H₂O", "CO₂", "NaCl"];
+      }
+      const historyList = document.getElementById('history-list');
+      historyList.innerHTML = '';
+      history.forEach(compound => {
+        const li = document.createElement('li');
+        li.textContent = compound;
+        historyList.appendChild(li);
+      });
+    }
+
+    loadHistory();
+
+    // Clear history functionality
+    document.getElementById('clear-history').addEventListener('click', function() {
+      localStorage.removeItem('compoundHistory');
+      loadHistory();
+    });
+  </script>
+</body>
+</html>
+
