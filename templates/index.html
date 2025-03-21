@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SMILES Property Predictor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      background-color: #f5f5f5;
+    }
+    input {
+      padding: 10px;
+      width: 300px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #results {
+      margin-top: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: auto;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔬 SMILES Predictor</h1>
+    <input type="text" id="smilesInput" placeholder="Enter SMILES notation" />
+    <br>
+    <button onclick="predict()">Predict</button>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    async function predict() {
+      const smiles = document.getElementById("smilesInput").value;
+      const res = await fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ smiles: smiles })
+      });
+
+      const resultBox = document.getElementById("results");
+      resultBox.innerHTML = "";
+
+      const data = await res.json();
+
+      if (data.error) {
+        resultBox.innerHTML = `<p style="color:red;">${data.error}</p>`;
+      } else {
+        for (const [key, value] of Object.entries(data)) {
+          resultBox.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
