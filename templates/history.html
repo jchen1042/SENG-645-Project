@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search History - SMILES Predictor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f7f9;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0078D7;
+      margin-bottom: 30px;
+    }
+
+    .history-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .record {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .record:last-child {
+      border-bottom: none;
+    }
+
+    .record h3 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .record p {
+      margin: 3px 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .timestamp {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .back-link a {
+      text-decoration: none;
+      color: #0078D7;
+    }
+  </style>
+</head>
+<body>
+  <div class="history-container">
+    <h1>🔁 Your SMILES Prediction History</h1>
+
+    {% if records|length == 0 %}
+      <p>No prediction history found.</p>
+    {% else %}
+      {% for record in records %}
+        <div class="record">
+          <h3>SMILES: {{ record.smiles }}</h3>
+          {% for key, value in record.predicted.items() %}
+            <p><strong>{{ key }}:</strong> {{ value }}</p>
+          {% endfor %}
+          <div class="timestamp">⏱ {{ record.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <div class="back-link">
+      <a href="/home">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>
