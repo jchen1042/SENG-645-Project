@@ -5,34 +5,27 @@ from rdkit import Chem
 from rdkit.Chem import Descriptors
 import joblib
 import numpy as np
-from pymongo import MongoClient
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
-# ✅ MySQL (AWS RDS)
+# Database connection - update with your AWS credentials
 db = mysql.connector.connect(
-    host="database-1.cvakiyk6o3wb.us-east-2.rds.amazonaws.com",
+    host="database-1.cvakiyk6o3wb.us-east-2.rds.amazonaws.com",     # e.g., "your-db.us-east-1.rds.amazonaws.com"
     user="admin",
     password="ChemicalCompound4!",
     database="userInfo"
 )
 cursor = db.cursor()
 
-# ✅ MongoDB Atlas connection
-mongo_uri = "mongodb+srv://myuser:ChemicalCompound4!@chemicalcompoundhistory.6hdzk.mongodb.net/?retryWrites=true&w=majority&appName=ChemicalCompoundHistory"
-mongo_client = MongoClient(mongo_uri)
-mongo_db = mongo_client["ChemicalCompoundHistory"]
-history_collection = mongo_db["search_history"]
-
-# ✅ Load models
+# Load ML models using joblib
 alogp_model = joblib.load('model/alogp_rf_model.pkl')
 cxlogp_model = joblib.load('model/cx_logp_rf_model.pkl')
 mw_model = joblib.load('model/molecular_weight_rf_model.pkl')
 psa_model = joblib.load('model/polar_surface_area_rf_model.pkl')
 rot_model = joblib.load('model/rotatable_bonds_rf_model.pkl')
 
-# ✅ Feature extraction
+# Feature extraction from SMILES
 def extract_features(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -63,7 +56,7 @@ def register():
 
         cursor.execute("INSERT INTO users (email, password_hash) VALUES (%s, %s)", (email, password))
         db.commit()
-        flash('Registered successfully. Please log in.')
+        flash('Registered successfully, please log in')
         return redirect('/login')
     return render_template('register.html')
 
@@ -76,17 +69,12 @@ def login():
         cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
         user = cursor.fetchone()
 
-        if user and check_password_hash(user[2], password):
+        if user and check_password_hash(user[2], password):  # user[2] is password_hash
             session['user'] = email
             return redirect('/home')
         else:
-            flash('Invalid email or password')
+            flash('Invalid credentials')
     return render_template('login.html')
-
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect('/login')
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -103,36 +91,21 @@ def home():
         if features:
             features = np.array(features).reshape(1, -1)
             predictions = {
-                'ALogP': float(alogp_model.predict(features)[0]),
-                'CX_LogP': float(cxlogp_model.predict(features)[0]),
-                'Molecular Weight': float(mw_model.predict(features)[0]),
-                'Polar Surface Area': float(psa_model.predict(features)[0]),
-                'Rotatable Bonds': float(rot_model.predict(features)[0]),
+                'ALogP': alogp_model.predict(features)[0],
+                'CxLogP': cxlogp_model.predict(features)[0],
+                'Molecular Weight': mw_model.predict(features)[0],
+                'Polar Surface Area': psa_model.predict(features)[0],
+                'Rotatable Bonds': rot_model.predict(features)[0],
             }
-
-            # ✅ Store in MongoDB with standard types
-            history_collection.insert_one({
-                "email": session['user'],
-                "smiles": smiles,
-                "predictions": predictions
-            })
         else:
             error = "Invalid SMILES notation."
 
     return render_template('home.html', user=session['user'], predictions=predictions, error=error)
 
-@app.route('/history')
-def history():
-    if 'user' not in session:
-        return redirect('/login')
-
-    user_email = session['user']
-    results = list(history_collection.find({"email": user_email}))
-    return render_template('history.html', user=user_email, records=results)
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/login')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
