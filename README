@@ -1,1 +1,10 @@
-README
+This is a repository contains the code for Team Retriever's Software Engineering
+645 semester project.
+
+This application presents an interface for users to interact with a machine learning model. The model is 
+trained on data taken from ChEMBL, a datbase of bioactive molecules with drug-like properties. Users can
+enter a compound in SMILES notation to be passed to the model. The model makes estimates certain chemical
+properties of said compound and displays them to the user.
+
+In addition, users can create accounts using their email. Creating an account allows users to view a history of
+past compound lookups. User account credentials are stored in a MySQL database while lookup history is stored via MongoDB.
