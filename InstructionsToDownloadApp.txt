@@ -1,0 +1,11 @@
+On Android (Chrome):
+1. Open Chrome on your phone.
+2. Go to the websites address. https://seng645.onrender.com/
+3. Tap the three dots menu → Tap "Add to Home screen".
+4. You’ll see the app installed on your phone.
+
+On iPhone (Safari only):
+1. Open Safari on your iPhone.
+2. Go to your websites address. https://seng645.onrender.com/
+3. Tap the Share icon → Scroll down → Add to Home Screen
+4. Confirm → App icon shows up on your home screen
